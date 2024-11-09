@@ -11,7 +11,12 @@ pipeline {
                    sh "mvn -version"
                }
            }
-
+            stage('Build') {
+              steps {
+                sh './mvnw clean install site surefire-report:report'
+                sh 'tree'
+          }
+    }    
            
-       }
+ }
 }
