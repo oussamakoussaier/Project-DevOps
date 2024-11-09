@@ -4,14 +4,12 @@ pipeline {
     environment {
         GIT_REPO = 'https://github.com/oussamakoussaier/Project-DevOps.git'
         GIT_CREDENTIALS_ID = 'github_token'
-        MAIL_RECIPIENT = 'imen.abassi@esprit.tn'
-        MAIL_SENDER = 'support@darkmatter-corp.com'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'ImenAbassi-5NIDS1', credentialsId: "${GIT_CREDENTIALS_ID}", url: "${GIT_REPO}"
+                git branch: 'OussamaKoussaier', credentialsId: "${GIT_CREDENTIALS_ID}", url: "${GIT_REPO}"
 
             }
         }
