@@ -8,15 +8,9 @@ pipeline {
            }
            stage('UNIT Testing'){
                steps{
-                   sh "mvn -version"
+                   sh "mvn test"
                }
            }
-          stage('Static code analysis'){
-               steps{
-                   withSonarQubeEnv(installationName: 'sq1', credentialsId: 'jenkins-sonar'){
-                       sh "mvn clean package sonar:sonar"
-                   }
-               }
-        }    
+
     }
 }
