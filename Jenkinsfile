@@ -1,42 +1,39 @@
 pipeline {
     agent any
-
-    environment {
-        GIT_REPO = 'https://github.com/oussamakoussaier/Project-DevOps.git'
-        GIT_CREDENTIALS_ID = 'github_token'
+    tools {
+        maven 'maven3'
     }
-
+    options {
+        buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
+    }
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                git branch: 'OussamaKoussaier', credentialsId: "${GIT_CREDENTIALS_ID}", url: "${GIT_REPO}"
-
+                sh script: 'mvn clean package'
+                archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
             }
         }
-
-        stage('Clean') {
+        stage('Upload War To Nexus') {
             steps {
                 script {
-                    if (fileExists('target')) {
-                        echo 'Cleaning target directory...'
-                        sh 'rm -rf target'
-                    }
+                    def mavenPom = readMavenPom file: 'pom.xml'
+                    nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: 'app',
+                            classifier: '',
+                            file: "target/app-${mavenPom.version}.war",
+                            type: 'war'
+                        ]
+                    ],
+                    credentialsId: 'nexus',
+                    groupId: 'cloudgeeks',
+                    nexusUrl: 'nexus:8081/repository/app/',
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    repository: 'app',
+                    version: "${mavenPom.version}"
                 }
             }
         }
-
-        stage('Build') {
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
-
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
-            }
-        }
     }
-
-   
 }
