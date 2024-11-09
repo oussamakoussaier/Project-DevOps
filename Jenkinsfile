@@ -6,9 +6,14 @@ pipeline {
                    git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
                }
            }
-           stage('test'){
+           stage('UNIT Testing'){
                steps{
-                   sh "mvn -version"
+                   sh "mvn test"
+               }
+           }
+           stage('Integration testing'){
+               steps{
+                   sh "mvn verify -DskipUnitTests"
                }
            }
            
