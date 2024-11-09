@@ -19,19 +19,16 @@ pipeline {
                     def mavenPom = readMavenPom file: 'pom.xml'
                     nexusArtifactUploader artifacts: [
                         [
-                            artifactId: 'app',
-                            classifier: '',
-                            file: "target/app-${mavenPom.version}.war",
-                            type: 'war'
-                        ]
-                    ],
-                    credentialsId: 'nexus',
-                    groupId: 'cloudgeeks',
-                    nexusUrl: 'nexus:8081/repository/app/',
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    repository: 'app',
-                    version: "${mavenPom.version}"
+                            artifactId: 'gestion-station-ski', 
+                            classifier: '', file: 'target/app-1.0.0.war', 
+                            type: 'war']
+                    ], 
+                        credentialsId: 'nexus', 
+                        groupId: 'cloudgeeks', 
+                        nexusUrl: '192.168.33.10:8081/repository/app/', 
+                        nexusVersion: 'nexus3', protocol: 'http', 
+                        repository: 'http://192.168.33.10:8081/repository/app/', 
+                        version: '1.0'
                 }
             }
         }
