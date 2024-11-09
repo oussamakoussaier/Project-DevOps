@@ -11,12 +11,12 @@ pipeline {
                    sh "mvn -version"
                }
            }
-            stage('Build') {
-              steps {
-                sh './mvnw clean install site surefire-report:report'
-                sh 'tree'
-          }
-    }    
-           
- }
+          stage('Static code analysis'){
+               steps{
+                   withSonarQubeEnv(credentialsId: 'sq1'){
+                       sh "mvn clean package sonar:sonar"
+                   }
+               }
+        }    
+    }
 }
