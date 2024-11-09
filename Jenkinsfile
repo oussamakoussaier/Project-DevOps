@@ -24,7 +24,7 @@ pipeline {
                             type: 'war']
                     ], 
                         credentialsId: 'nexus', 
-                        groupId: 'cloudgeeks', 
+                        groupId: 'gestion-station-ski', 
                         nexusUrl: '192.168.33.10:8081/repository/app/', 
                         nexusVersion: 'nexus3', protocol: 'http', 
                         repository: 'http://192.168.33.10:8081/repository/app/', 
