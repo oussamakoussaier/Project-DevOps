@@ -45,7 +45,7 @@ pipeline {
                         [
                             [artifactId: 'gestion-station-ski',
                              classifier: '', 
-                             file: 'target/lombok.jar',
+                             file: 'target/gestion-station-ski-1.0.jar',
                              type: 'jar']
                         ],
                         credentialsId: 'nexus-auth',
