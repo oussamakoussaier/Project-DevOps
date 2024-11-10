@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        // Define the Dependency-Check tool here with the correct tool name from Jenkins Global Tool Configuration
-        dependency-check 'DP-check' // Ensure this matches the name you gave the tool in Jenkins Global Tool Configuration
+        // Define the Dependency-Check tool correctly
+        dependencyCheck 'DP-check' // Ensure this matches the name you gave the tool in Global Tool Configuration
     }
 
     stages {
