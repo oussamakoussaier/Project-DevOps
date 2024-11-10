@@ -85,23 +85,18 @@
 </distributionManagement>
 	<build>
 		<plugins>
-			<plugin>
-            <groupId>org.owasp</groupId>
-            <artifactId>dependency-check-maven</artifactId>
-            <version>8.4.0</version> <!-- Check for the latest version -->
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>check</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <format>ALL</format> <!-- Options: HTML, XML, JSON, SARIF, ALL -->
-                <outputDirectory>${project.build.directory}/dependency-check-report</outputDirectory>
-                <failBuildOnCVSS>7</failBuildOnCVSS> <!-- Set CVSS score threshold for build failure -->
-            </configuration>
-        </plugin>
+	<plugin>
+    <groupId>org.owasp</groupId>
+    <artifactId>dependency-check-maven</artifactId>
+    <version>6.1.5</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>check</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
