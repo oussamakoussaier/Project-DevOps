@@ -42,6 +42,7 @@ pipeline {
             steps{
                 script{
                     def redPomVersion = readMavenPom file: 'pom.xml'
+                    def nexusRepo = readMavenPom.version.endsWith('SNAPSHOT') ? "demoapp-snapshot" : "demoapp-release"
                     nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
@@ -54,8 +55,8 @@ pipeline {
                         nexusUrl: '192.168.33.10:8081',
                         nexusVersion: 'nexus3', 
                         protocol: 'http',
-                        repository: 'demoapp-release',
-                        version: '${redPomVersion.version}'
+                        repository: nexusRepo,
+                        version: '${readPomVersion.version}'
                 }
             }
         }
