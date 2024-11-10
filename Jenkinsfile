@@ -38,5 +38,24 @@ pipeline {
                } 
             }
         }
+        stage('Upload War File to Nexus'){
+            steps{
+                script{
+                    nexusArtifactUploader artifacts: 
+                        [
+                            [artifactId: 'gestion-station-ski',
+                             classifier: '', file: 'target/lombok.jar',
+                             type: 'jar']
+                        ],
+                        credentialsId: 'nexus-auth',
+                        groupId: 'tn.esprit.spring',
+                        nexusUrl: '192.168.33.10:8081',
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http',
+                        repository: 'demoapp-release',
+                        version: '1.0'
+                }
+            }
+        }
     }
 }
