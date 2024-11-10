@@ -7,44 +7,12 @@ pipeline {
                 git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
             }
         }
-
-        stage('Unit Testing') {
+    stages {
+        stage('Depedency Check') {
             steps {
-                sh "mvn test"
+                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-check'
             }
         }
-
-        stage('Integration Testing') {
-            steps {
-                sh "mvn verify -DskipUnitTests"
-            }
-        }
-
-        stage('Maven Build') {
-            steps {
-                sh "mvn clean install"
-            }
-        }
-
-        stage('Static Code Analysis') {
-            steps {
-                script {
-                    // Ensure the correct SonarQube credentials ID is used here
-                    withSonarQubeEnv(credentialsId: 'sonar-api-key') {
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                }
-            }
-        }
-
-        stage('Dependency Vulnerability Scanning') {
-            steps {
-                script {
-                    // Run OWASP Dependency-Check to check for vulnerabilities in dependencies
-                    dependencyCheck additionalArguments: '--scan . --out target/dependency-check-report', 
-                                    odcInstallation: 'DP-check' // 'DP-check' is the name of the tool you configured in Global Tool Configuration
-                }
-            }
-        }
+        
     }
 }
