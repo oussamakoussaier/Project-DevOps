@@ -7,13 +7,11 @@ pipeline {
                 git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
             }
         }
-    stages {
         stage('Depedency Check') {
             steps {
                 dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-check'
-                }
-            }    
+            }
+        }    
         
-        }
     }
 }
