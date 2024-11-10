@@ -34,8 +34,7 @@ pipeline {
          stage('Upload War File to Nexus'){
             steps{
                 script{
-                    def readPomVersion = readMavenPom file: 'pom.xml'
-                    def nexusRepo = readPomVersion.version.endsWith('SNAPSHOT') ? "final-release-snapshot" : "final-release"
+                  
                     nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
