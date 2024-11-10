@@ -44,7 +44,7 @@ pipeline {
                     nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
-                             classifier: '', file: 'target/lombok.jar',
+                             classifier: '', file: fileToUpload,
                              type: 'jar']
                         ],
                         credentialsId: 'nexus-auth',
