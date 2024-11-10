@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        // Define the tool if you have configured it in Jenkins Global Tools Configuration
-        dependencyCheck 'Dependency-Check' // Ensure this tool is installed in Jenkins
+        // Define the Dependency-Check tool here with the correct tool name from Jenkins Global Tool Configuration
+        dependency-check 'DP-check' // Ensure this matches the name you gave the tool in Jenkins Global Tool Configuration
     }
 
     stages {
@@ -47,7 +47,7 @@ pipeline {
                 script {
                     // Run OWASP Dependency-Check to check for vulnerabilities in dependencies
                     dependencyCheck additionalArguments: '--scan . --out target/dependency-check-report', 
-                                    odcInstallation: 'DP-check' // 'DP-check' is the name of the tool installation you configured in Jenkins
+                                    odcInstallation: 'DP-check' // 'DP-check' is the name of the tool you configured in Global Tool Configuration
                 }
             }
         }
