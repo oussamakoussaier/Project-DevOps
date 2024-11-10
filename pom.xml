@@ -60,7 +60,13 @@
                     <scope>runtime</scope>
            	</dependency>
 	</dependencies>
-
+	<distributionManagement>
+		<repository>
+			<id>DeploymentRepo</id>
+			<name>Nexus Repository</name>
+			<url>http://192.168.33.10:8081/repository/demoapp-release/</url>
+		</repository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
