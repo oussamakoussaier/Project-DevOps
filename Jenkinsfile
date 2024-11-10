@@ -44,8 +44,9 @@ pipeline {
                     nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
-                             classifier: '', file: fileToUpload,
-                             type: 'jar']
+                             classifier: '',
+                             file: "target/app-${mavenPom.version}.war",
+                             type: 'war']
                         ],
                         credentialsId: 'nexus-auth',
                         groupId: 'tn.esprit.spring',
