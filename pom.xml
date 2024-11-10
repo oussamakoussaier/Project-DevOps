@@ -53,14 +53,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<distributionManagement>
+		
+	</dependencies>
+	<distributionManagement>
 		<repository>
 			<id>DeploymentRepo</id>
 			<name>Nexus Repository</name>
 			<url>http://192.168.33.10:8081/repository/final-release/</url>
 		</repository>
 	</distributionManagement>
-	</dependencies>
 
 	<build>
 		<plugins>
