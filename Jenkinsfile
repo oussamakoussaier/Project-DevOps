@@ -31,6 +31,28 @@ pipeline {
                 }
             }
         }
+         stage('Upload War File to Nexus'){
+            steps{
+                script{
+                    def readPomVersion = readMavenPom file: 'pom.xml'
+                    def nexusRepo = readPomVersion.version.endsWith('SNAPSHOT') ? "final-release-snapshot" : "final-release"
+                    nexusArtifactUploader artifacts: 
+                        [
+                            [artifactId: 'gestion-station-ski',
+                             classifier: '', 
+                             file: 'target/gestion-station-ski-1.0.jar',
+                             type: 'jar']
+                        ],
+                        credentialsId: 'nexus-auth',
+                        groupId: 'tn.esprit.spring',
+                        nexusUrl: '192.168.33.10:8081',
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http',
+                        repository: nexusRepo,
+                        version: '${readPomVersion.version}'
+                }
+            }
+        }
       
 
  
