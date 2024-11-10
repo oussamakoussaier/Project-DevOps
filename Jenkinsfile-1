@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     // Run OWASP Dependency-Check to check for vulnerabilities in dependencies
-                    sh 'dependency-check --scan . --out target/dependency-check-report'
+                    sh dependencyCheck additionalArguments: '--scan . --out target/dependency-check-report', odcInstallation: 'DP-check'
                 }
             }
         }
