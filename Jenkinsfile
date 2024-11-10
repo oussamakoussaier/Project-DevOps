@@ -41,6 +41,7 @@ pipeline {
         stage('Upload War File to Nexus'){
             steps{
                 script{
+                    def redPomVersion = readMavenPom file: 'pom.xml'
                     nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
@@ -54,7 +55,7 @@ pipeline {
                         nexusVersion: 'nexus3', 
                         protocol: 'http',
                         repository: 'demoapp-release',
-                        version: '1.0'
+                        version: '${redPomVersion.version}'
                 }
             }
         }
