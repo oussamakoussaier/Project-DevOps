@@ -40,21 +40,26 @@ pipeline {
         }
         stage('Upload War File to Nexus'){
             steps{
-                script{
-                    nexusArtifactUploader artifacts: 
+                script {
+                    def fileToUpload = 'target/gestion-station-ski-1.0.jar'  // Define the correct file name here
+                    // Ensure the file exists before uploading
+                    if (fileExists(fileToUpload)) {
+                        nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
-                             classifier: '',
-                             file: "target/app-${mavenPom.version}.war",
-                             type: 'war']
+                             classifier: '', file: fileToUpload,
+                             type: 'jar']
                         ],
                         credentialsId: 'nexus-auth',
                         groupId: 'tn.esprit.spring',
-                        nexusUrl: '192.168.33.10:8081',
+                        nexusUrl: 'http://192.168.33.10:8081',  // Ensure 'http://' or 'https://' is specified correctly
                         nexusVersion: 'nexus3', 
-                        protocol: 'http',
+                        protocol: 'http',  // Change to 'https' if your Nexus instance uses HTTPS
                         repository: 'demoapp-release',
                         version: '1.0'
+                    } else {
+                        error "File ${fileToUpload} does not exist. Please check the build output."
+                    }
                 }
             }
         }
