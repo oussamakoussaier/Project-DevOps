@@ -11,9 +11,9 @@ pipeline {
         stage('Depedency Check') {
             steps {
                 dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-check'
-            }
-        }
+                }
+            }    
         
+        }
     }
-}
 }
