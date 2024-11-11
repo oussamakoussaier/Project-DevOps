@@ -61,7 +61,8 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                // Construire l'image Docker avec le tag `votreutilisateur/achat:1.0.0`
+                 sh 'docker --version'
+
                 sh 'docker build -t imenabassi/gestion-station-ski-1.0 .'
             }
         }
