@@ -16,5 +16,15 @@ pipeline {
                 dependencyCheck additionalArguments: '--format HTML --nvdApiKey $NVD_API_KEY', odcInstallation: 'DP-check'
             }
         }
+            stage('Integration Testing and DAST with OWASP ZAP') {
+                steps {
+                    script {
+                        // Start OWASP ZAP Docker container for dynamic scanning
+                        sh 'docker run -d -p 8080:8080 owasp/zap2docker-stable'
+                        sh 'mvn verify -DskipUnitTests'
+                        sh 'docker stop $(docker ps -q --filter ancestor=owasp/zap2docker-stable)'  // Stop after testing
+        }
+    }
+}
     }
 }
