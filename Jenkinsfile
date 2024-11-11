@@ -41,8 +41,9 @@ pipeline {
         stage('Upload War File to Nexus'){
             steps{
                 script{
-                    def readPomVersion = readMavenPom file: 'pom.xml'
-                    def nexusRepo = readPomVersion.version.endsWith('SNAPSHOT') ? "demoapp-snapshot" : "demoapp-release"
+                    def readPomVersion = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
+                    def nexusRepo = readPomVersion.endsWith('SNAPSHOT') ? "demoapp-snapshot" : "demoapp-release"
+
                     nexusArtifactUploader artifacts: 
                         [
                             [artifactId: 'gestion-station-ski',
