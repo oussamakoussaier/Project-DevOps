@@ -29,7 +29,7 @@ pipeline {
                         // Trigger the active scan via ZAP API (replace with your actual URL)
                         sh """
                         curl -X POST http://102.168.33.10:8080/JSON/ascan/action/scan \
-                            -d 'url=https://https://github.com/oussamakoussaier/Project-DevOps.git' \
+                            -d 'url=https://github.com/oussamakoussaier/Project-DevOps.git' \
                             -d 'recurse=true' \
                             -d 'inScopeOnly=false' \
                             -d 'scanContext=default'
