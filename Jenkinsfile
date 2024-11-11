@@ -52,7 +52,11 @@ pipeline {
                 }
             }
         }
-      
+       stage('Building image') {
+            steps {
+                sh 'docker build -t imenabassi/gestion-station-ski:1.0.0 .'
+            }
+        }
 
  
 
