@@ -21,7 +21,7 @@ pipeline {
                 steps {
                     script {
                                               // Start OWASP ZAP Docker container for dynamic scanning
-                        sh 'docker run -d -p 8084:8080 --name zaproxy --network mynetwork zaproxy/zap-stable'
+                        sh 'docker run -d -p 8084:8080 --name zaproxy --network mynetwork zaproxy/zap-stable zap.sh -daemon -port 8080'
             
                         // Wait for ZAP to start
                         sleep 10
