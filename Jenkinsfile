@@ -51,14 +51,14 @@ pipeline {
                         version: '1.0'
                 }
             }
-        }
+        }*/
        stage('Build JAR') {
             steps {
                 // Exécutez Maven pour compiler et packager votre projet
                 sh 'mvn clean package'
             }
         }
-        */
+        
         stage('Build Docker Image') {
             steps {
                 // Construire l'image Docker avec le tag `votreutilisateur/achat:1.0.0`
