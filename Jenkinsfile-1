@@ -9,25 +9,9 @@ pipeline {
         stage('Git Checkout and Secrets Scan') {
             steps {
                 script {
-                    // Step 1: Check if Docker image already exists locally
-                    def imageExists = sh(script: "docker images -q ${IMAGE_NAME}", returnStdout: true).trim()
-                    
-                    // Step 2: Pull Docker image if it exists locally, otherwise clone the repo and build the Docker image
-                    if (imageExists) {
-                        echo "Docker image ${IMAGE_NAME} exists. Pulling latest image..."
-                        sh "docker pull ${IMAGE_NAME}"
-                    } else {
-                        echo "Docker image ${IMAGE_NAME} not found. Cloning repository and building the image..."
-                        // Checkout the Git repository
-                        git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
-                        
-                        // Build the Docker image
-                        sh "docker build -t ${IMAGE_NAME} ${WORKSPACE}/Project-DevOps"
-                    }
-                }
                 
-                // Step 3: Run TruffleHog to scan the repository for secrets and save the result to a file
-                script {
+              
+                
                     def repoPath = 'Project-DevOps'  // The local folder where Git checks out the repo
                     def outputFile = 'trufflehog_scan_result.json'  // Output file for TruffleHog results
                     
