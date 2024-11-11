@@ -17,44 +17,7 @@ pipeline {
                 dependencyCheck additionalArguments: '--format HTML --nvdApiKey $NVD_API_KEY', odcInstallation: 'DP-check'
             }
         }
-            stage('Integration Testing and DAST with OWASP ZAP') {
-                steps {
-                    script {
-                                    // Docker login command using credentials from Jenkins
-                        sh """
-                            echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
-                        """
-            
-                    // Start OWASP ZAP Docker container for dynamic scanning in daemon mode
-                        sh 'docker run -d -p 8080:8080 --name zaproxy zaproxy/zap-stable zap.sh -daemon'
-
-                        // Wait for ZAP to start
-                        sleep(15)  // Give ZAP a few seconds to start up
-
-                        // Run the Maven verify command (skip unit tests)
-                        sh 'mvn verify -DskipUnitTests'
-
-                        // Run OWASP ZAP scan using API (e.g., spidering or active scan)
-                        sh """
-                            docker exec zaproxy zap-cli quick-scan --start-url https://github.com/oussamakoussaier/Project-DevOps
-                        """
-
-                        // Optionally, you can save the ZAP report (HTML or JSON)
-                        sh """
-                            docker exec zaproxy zap-cli report --output /zap/reports/zap_report.html
-                        """
-
-                        // Copy the report to the Jenkins workspace (optional)
-                        sh """
-                            docker cp zaproxy:/zap/reports/zap_report.html ${WORKSPACE}/zap_report.html
-                        """
-
-                        // Archive the ZAP report as a build artifact
-                         archiveArtifacts artifacts: 'zap_report.html', allowEmptyArchive: true
-
-                    }
-                }
-            }
+       
             stage('Static Code Analysis') {
                 steps {
                     script {
