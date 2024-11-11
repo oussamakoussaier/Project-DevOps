@@ -36,7 +36,7 @@ pipeline {
 
                         // Run OWASP ZAP scan using API (e.g., spidering or active scan)
                         sh """
-                            docker exec zaproxy zap-cli quick-scan --start-url http://your-application-url
+                            docker exec zaproxy zap-cli quick-scan --start-url https://github.com/oussamakoussaier/Project-DevOps.git
                         """
             
                         // Save the ZAP report (e.g., HTML or JSON format) from the ZAP container
