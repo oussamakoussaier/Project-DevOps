@@ -13,20 +13,16 @@ pipeline {
         }
             stage('Dependency Check') {
                 steps {
-                // Run Dependency Check with the provided API key and output format
                 dependencyCheck additionalArguments: '--format HTML --nvdApiKey $NVD_API_KEY', odcInstallation: 'DP-check'
             }
         }
             stage('Integration Testing and DAST with OWASP ZAP') {
                 steps {
                     script {
-                                              // Start OWASP ZAP Docker container for dynamic scanning
                         sh 'docker run -d -p 8080:8080 --name zaproxy --network mynetwork zaproxy/zap-stable zap.sh -daemon -port 8080 -config api.disablekey=true'
             
-                        // Wait for ZAP to start
                         sleep 30
             
-                        // Trigger the active scan via ZAP API (replace with your actual URL)
                         sh """
                         curl -X POST http://localhost:8080/JSON/ascan/action/scan \
                         -d 'url=https://github.com/oussamakoussaier/Project-DevOps.git' \
@@ -35,10 +31,8 @@ pipeline {
                         -d 'scanContext=default'
                         """
             
-                        // Run the Maven verify command
                         sh 'mvn verify -DskipUnitTests'
 
-                        // Optionally stop the OWASP ZAP container after the scan
                         sh 'docker stop zaproxy'
 
                     }
