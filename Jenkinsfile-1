@@ -10,7 +10,7 @@ pipeline {
                 git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
                 
                 // Run TruffleHog to scan the repository for secrets
-                sh 'trufflehog --git_url https://github.com/oussamakoussaier/Project-DevOps.git --json'
+                sh 'trufflehog https://github.com/oussamakoussaier/Project-DevOps.git --json'
             }
         }
         
