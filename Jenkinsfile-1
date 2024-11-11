@@ -30,9 +30,6 @@ pipeline {
                     
                     // Run the Maven verify command
                     sh 'mvn verify -DskipUnitTests'
-                    
-                    // Stop the OWASP ZAP Docker container after the tests
-                    sh 'docker stop $(docker ps -q --filter ancestor=owasp/zap2docker-stable)'
 
         }
     }
