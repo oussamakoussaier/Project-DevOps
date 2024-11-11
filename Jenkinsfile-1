@@ -31,6 +31,15 @@ pipeline {
                     // Run the Maven verify command
                     sh 'mvn verify -DskipUnitTests'
 
+                    }
+                }
+            }
+            stage('Static Code Analysis') {
+                steps {
+                    script {
+                        withSonarQubeEnv(credentialsId: 'sonar-api-key') {
+                        sh 'mvn clean package sonar:sonar'
+            }
         }
     }
 }
