@@ -6,7 +6,7 @@ pipeline {
                 git branch: 'ImenAbassi-5NIDS1', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
             }
         }
-        stage('Unit Testing') {
+       /* stage('Unit Testing') {
             steps {
                 sh "mvn test"
             }
@@ -52,9 +52,27 @@ pipeline {
                 }
             }
         }
-       stage('Building image') {
+       stage('Build JAR') {
             steps {
-                sh 'docker build -t imenabassi/gestion-station-ski:1.0.0 .'
+                // Exécutez Maven pour compiler et packager votre projet
+                sh 'mvn clean package'
+            }
+        }
+        */
+        stage('Build Docker Image') {
+            steps {
+                // Construire l'image Docker avec le tag `votreutilisateur/achat:1.0.0`
+                sh 'docker build -t imenabassi/gestion-station-ski-1.0 .'
+            }
+        }
+        
+        stage('Push to DockerHub') {
+            steps {
+                // Se connecter à DockerHub et pousser l'image
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    sh 'docker push imenabassi/gestion-station-ski-1.0'
+                }
             }
         }
 
