@@ -20,16 +20,37 @@ pipeline {
             stage('Integration Testing and DAST with OWASP ZAP') {
                 steps {
                     script {
-                        // Docker login command using credentials from Jenkins
-                    sh """
-                    echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
-                    """
-                    
-                    // Start OWASP ZAP Docker container for dynamic scanning
-                    sh 'docker run -d -p 8080:8080 zaproxy/zap-stable'
-                    
-                    // Run the Maven verify command
-                    sh 'mvn verify -DskipUnitTests'
+                                    // Docker login command using credentials from Jenkins
+                        sh """
+                            echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
+                        """
+            
+                        // Start OWASP ZAP Docker container for dynamic scanning
+                        sh 'docker run -d -p 8080:8080 --name zaproxy zaproxy/zap-stable'
+            
+                        // Wait for the ZAP container to initialize
+                        sh 'sleep 30'  // Adjust sleep time based on how long it takes for ZAP to start
+            
+                        // Run the Maven verify command
+                        sh 'mvn verify -DskipUnitTests'
+
+                        // Run OWASP ZAP scan using API (e.g., spidering or active scan)
+                        sh """
+                            docker exec zaproxy zap-cli quick-scan --start-url http://your-application-url
+                        """
+            
+                        // Save the ZAP report (e.g., HTML or JSON format) from the ZAP container
+                        sh """
+                            docker exec zaproxy zap-cli report --output /zap/reports/zap_report.html
+                          """
+            
+                        // Optionally, you can copy the report to the Jenkins workspace if needed
+                        sh """
+                            docker cp zaproxy:/zap/reports/zap_report.html ${WORKSPACE}/zap_report.html
+                            """
+            
+                        // Archive the ZAP report as a build artifact
+                        archiveArtifacts artifacts: 'zap_report.html', allowEmptyArchive: true
 
                     }
                 }
