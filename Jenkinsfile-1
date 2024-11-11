@@ -3,18 +3,22 @@ pipeline {
     environment {
         NVD_API_KEY = '0bfb1a0f-8c1c-4c46-8dbf-fed7c645828d'  // Replace with your actual API key
     }
-        stages {
+    stages {
         stage('Git Checkout and Secrets Scan') {
             steps {
+                // Checkout the Git repository first
+                git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
+                
+                // Run TruffleHog to scan the repository for secrets
                 sh 'trufflehog --json https://github.com/oussamakoussaier/Project-DevOps.git'
             }
-            git branch: 'OussamaKoussaier', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
         }
-        stage('Depedency Check') {
+        
+        stage('Dependency Check') {
             steps {
+                // Run Dependency Check with the provided API key and output format
                 dependencyCheck additionalArguments: '--format HTML --nvdApiKey $NVD_API_KEY', odcInstallation: 'DP-check'
             }
-        }    
-        
+        }
     }
 }
