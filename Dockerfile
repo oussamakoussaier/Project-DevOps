@@ -5,7 +5,7 @@ RUN mvn install
 
 FROM openjdk:11.0
 WORKDIR /app
-COPY --from=build /app/target/gestion-station-ski-1.0 /app/
+COPY --from=build /app/target/gestion-station-ski-1.0.jar /app/
 EXPOSE 9090
 CMD ["java", "-jar","gestion-station-ski-1.0.jar"]
 
