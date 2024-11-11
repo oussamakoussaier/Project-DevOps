@@ -24,7 +24,7 @@ pipeline {
                         sh 'docker run -d -p 8080:8080 --name zaproxy --network mynetwork zaproxy/zap-stable zap.sh -daemon -port 8080'
             
                         // Wait for ZAP to start
-                        sleep 10
+                        sleep 100
             
                         // Trigger the active scan via ZAP API (replace with your actual URL)
                         sh """
