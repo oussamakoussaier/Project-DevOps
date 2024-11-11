@@ -3,7 +3,7 @@ pipeline {
     environment {
         NVD_API_KEY = '0bfb1a0f-8c1c-4c46-8dbf-fed7c645828d'  // Replace with your actual API key
     }
-    stages {
+        stages {
         stage('Git Checkout and Secrets Scan') {
             steps {
                 sh 'trufflehog --json https://github.com/oussamakoussaier/Project-DevOps.git'
