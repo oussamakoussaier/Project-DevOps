@@ -1,7 +1,8 @@
 pipeline {
     agent any
          environment {
-        NVD_API_KEY = '0bfb1a0f-8c1c-4c46-8dbf-fed7c645828d'  // Replace with your actual API key
+        NVD_API_KEY = '0bfb1a0f-8c1c-4c46-8dbf-fed7c645828d'  
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
             }
         stages {
             stage('Git Checkout and Secrets Scan') {
@@ -19,10 +20,20 @@ pipeline {
             stage('Integration Testing and DAST with OWASP ZAP') {
                 steps {
                     script {
-                        // Start OWASP ZAP Docker container for dynamic scanning
-                        sh 'docker run -d -p 8080:8080 owasp/zap2docker-stable'
-                        sh 'mvn verify -DskipUnitTests'
-                        sh 'docker stop $(docker ps -q --filter ancestor=owasp/zap2docker-stable)'  // Stop after testing
+                        // Docker login command using credentials from Jenkins
+                    sh """
+                    echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin
+                    """
+                    
+                    // Start OWASP ZAP Docker container for dynamic scanning
+                    sh 'docker run -d -p 8080:8080 owasp/zap2docker-stable'
+                    
+                    // Run the Maven verify command
+                    sh 'mvn verify -DskipUnitTests'
+                    
+                    // Stop the OWASP ZAP Docker container after the tests
+                    sh 'docker stop $(docker ps -q --filter ancestor=owasp/zap2docker-stable)'
+
         }
     }
 }
