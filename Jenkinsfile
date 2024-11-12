@@ -6,7 +6,7 @@ pipeline {
                 git branch: 'ImenAbassi-5NIDS1', url: 'https://github.com/oussamakoussaier/Project-DevOps.git'
             }
         }
-       /* stage('Unit Testing') {
+       stage('Unit Testing') {
             steps {
                 sh "mvn test"
             }
@@ -51,7 +51,7 @@ pipeline {
                         version: '1.0'
                 }
             }
-        }*/
+        }
        stage('Build JAR') {
             steps {
                 // Exécutez Maven pour compiler et packager votre projet
