@@ -1,4 +1,4 @@
-FROM maven:3.8.1-openjdk-11-slim as build
+FROM maven as build
 WORKDIR /app
 COPY  . .
 RUN mvn install
