@@ -71,6 +71,15 @@ pipeline {
                 }
             }
         }
-
+        stage('Push Image To DockerHub'){
+            steps{
+                script{
+                        sh"docker login -u oussama769 -p ouskous123@@"
+                        sh"docker image push oussama769/$JOB_NAME:v1.$BUILD_ID"
+                        sh"docker image push oussama769/$JOB_NAME:latest"
+                        
+                    }
+                }
+            }
     }
 }
