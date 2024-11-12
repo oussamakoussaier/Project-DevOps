@@ -2,7 +2,6 @@ pipeline {
     agent any
          environment {
         NVD_API_KEY = '0bfb1a0f-8c1c-4c46-8dbf-fed7c645828d'  
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
             }
         stages {
             stage('Git Checkout and Secrets Scan') {
