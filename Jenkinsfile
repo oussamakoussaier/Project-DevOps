@@ -58,7 +58,7 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        
+        /*
         stage('Build Docker Image') {
             steps {
                  sh 'docker --version'
@@ -76,7 +76,7 @@ pipeline {
                 }
             }
         }
-
+*/
  
 
     }
